@@ -1,30 +1,21 @@
-# Engineering Hub — Web App
+# Engineering Hub — Operations Dashboard
 
-Public **static interface only**. Private task records remain in `cestaahorro6/virage-engineering-hub`, **not** in this repository.
+A minimal static web application for viewing an encrypted, read-only engineering task dashboard.
 
-## Access
+## Privacy
 
-After GitHub Pages is enabled, open:
+This public repository contains only the interface and an **AES-256-GCM encrypted** snapshot. The original work orders and checklists are managed in a separate **private** GitHub repository.
 
-**https://cestaahorro6.github.io/virage-engineering-web/**
+The web application decrypts the snapshot in the browser using a private passphrase. Do not add unencrypted workshop records, source documents, access tokens, or passwords to this public repository.
 
-Enter the private data-decryption passphrase when the encrypted snapshot has been published. The first publication also requires a one-time setup in the **private** repo, described below.
+## Updates
 
-## How updates work
+An automated workflow in the private repository publishes a new encrypted snapshot after task changes, with a scheduled fallback. The interface checks for updates when opened and periodically while in use.
 
-1. Chief Engineer sends an update to ChatGPT.
-2. ChatGPT updates a private GitHub Issue.
-3. GitHub Actions in the **private** repo reads Issues and encrypts the snapshot with AES-256-GCM / PBKDF2-SHA256.
-4. An Actions credential permitted to write **only this public web repository** commits ciphertext to `snapshot.enc.json`.
-5. GitHub Pages serves only the empty UI and ciphertext; the browser decrypts it locally with the passphrase.
+## Setup
 
-**Important:** This is client-side encryption, not account authentication. The URL, code and encrypted file are public. Encryption strength depends on protecting a long unique passphrase; do not upload plaintext task data, offline demo, source Issues or credentials here.
+Hosting is provided through GitHub Pages using the `main` branch and `/(root)` folder. Publishing credentials and the encryption passphrase are managed separately in the private repository's Actions secrets.
 
-## One-time setup
+The interface is read-only. All modifications to jobs and checklists are made in the private issue tracker.
 
-1. Enable **Settings → Pages → Deploy from a branch → main → /(root)** in this public repository.
-2. In **https://github.com/cestaahorro6/virage-engineering-hub/settings/secrets/actions** ensure `VIRAGE_PASSPHRASE` is at least 20 characters and create `PUBLIC_PAGES_TOKEN`: a fine-grained GitHub token limited **only** to `cestaahorro6/virage-engineering-web` with **Contents: Read and write**.
-3. In the **private** repository go to **Actions → Publish encrypted Engineering Hub → Run workflow**. Successful execution creates the first `snapshot.enc.json` and updates this public site.
-4. Future changes to GitHub Issues trigger automatic encrypted snapshots, with an hourly fallback. The workflow also supports manual execution; until the secrets exist, the publisher skips its upload step.
-
-Do not place sensitive material in this public repository. Do not paste any passphrase, API key or token into ChatGPT.
+**Security note:** The interface, published URL, and encrypted snapshot are publicly accessible. This is encryption, not private web authentication.
