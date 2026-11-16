@@ -1,4 +1,4 @@
-# Team Virage · Engineering Hub — Web App
+# Engineering Hub — Web App
 
 Public **static interface only**. Private task records remain in `cestaahorro6/virage-engineering-hub`, **not** in this repository.
 
