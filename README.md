@@ -25,6 +25,6 @@ Enter the private data-decryption passphrase when the encrypted snapshot has bee
 1. Enable **Settings → Pages → Deploy from a branch → main → /(root)** in this public repository.
 2. In **https://github.com/cestaahorro6/virage-engineering-hub/settings/secrets/actions** ensure `VIRAGE_PASSPHRASE` is at least 20 characters and create `PUBLIC_PAGES_TOKEN`: a fine-grained GitHub token limited **only** to `cestaahorro6/virage-engineering-web` with **Contents: Read and write**.
 3. In the **private** repository go to **Actions → Publish encrypted Engineering Hub → Run workflow**. Successful execution creates the first `snapshot.enc.json` and updates this public site.
-4. Once tested, enable recurring and issue-change triggers in the private workflow. As currently committed, its trigger is manual to prevent failing runs before setup.
+4. Future changes to GitHub Issues trigger automatic encrypted snapshots, with an hourly fallback. The workflow also supports manual execution; until the secrets exist, the publisher skips its upload step.
 
 Do not place sensitive material in this public repository. Do not paste any passphrase, API key or token into ChatGPT.
